@@ -9,6 +9,7 @@ const App = {
       activeText: "",
       lastElement: false,
       turn: false,
+      isFinish: false,
       steps: [
         {
           isDone: false,
@@ -55,8 +56,9 @@ const App = {
     },
     reset() {
       // начать заново
-      this.lastElement = false;
+      this.isFinish = false;
       this.activeIndex = 0;
+      this.lastElement = !this.lastElement;
     },
     nextOfFinish(e) {
       // кнопка вперед или закончить

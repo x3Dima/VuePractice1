@@ -27,14 +27,23 @@
               {{step.title}}
             </li>
           </ul>
-          <div v-if="!lastElement">
+          <div v-if="!isFinish">
             <button @click="prev" v-if="turn" class="btn" v-bind:="turn">
               Назад
             </button>
             <button @click="prev" v-else class="btn" disabled v-bind:="turn">
               Назад
             </button>
-            <button @click="nextOfFinish" class="btn primary">Вперед</button>
+            <button
+              @click="nextOfFinish"
+              class="btn primary"
+              v-if="!lastElement"
+            >
+              Вперед
+            </button>
+            <button v-else @click="isFinish = !isFinish" class="btn primary">
+              Закончить
+            </button>
           </div>
           <div v-else>
             <button @click="reset" class="btn btn-primary">
