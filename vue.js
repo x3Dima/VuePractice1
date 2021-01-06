@@ -7,9 +7,7 @@ const App = {
     return {
       activeIndex: 0, // то, что позволяет определить текущий активный шаг
       activeText: "",
-      lastElement: false,
-      turn: false,
-      isFinish: false,
+      callReset: false,
       steps: [
         {
           isDone: false,
@@ -56,11 +54,10 @@ const App = {
     },
     reset() {
       // начать заново
-      this.isFinish = false;
+      this.callReset = false;
       this.activeIndex = 0;
-      this.lastElement = !this.lastElement;
     },
-    nextOfFinish(e) {
+    nextOfFinish() {
       // кнопка вперед или закончить
       if (this.activeIndex < this.steps.length - 1) this.activeIndex++;
     },
@@ -68,45 +65,26 @@ const App = {
       // когда нажимаем на определенный шаг
       this.activeIndex = i;
     },
+    stepFinish() {
+      this.callReset = true;
+    },
   },
   computed: {
     // тут стоит определить несколько свойств:
     // 1. текущий выбранный шаг
-    activeStep() {
-      return this.steps.map((step, i) => {
-        if (i === this.activeIndex) {
-          this.activeText = step.text;
-          step.isActive = true;
-        } else {
-          step.isActive = false;
-        }
-
-        if (this.activeIndex !== 0) {
-          this.turn = true;
-        } else {
-          this.turn = false;
-        }
-
-        if (this.activeIndex === this.steps.length - 1) this.lastElement = true;
-        return step;
-      });
-    },
-
-    chackPosition(i) {
-      return this.steps.map((step, i) => {
-        if (i < this.activeIndex) {
-          step.isDone = true;
-        } else {
-          step.isDone = false;
-        }
-      });
-    },
-    // activeClass() {
-    //   return this.steps.map((step, i) => {});
-    // },
     // 2. выключена ли кнопка назад
-
     // 3. находимся ли мы на последнем шаге
+    setActiveText() {
+      return this.steps[this.activeIndex].text;
+    },
+
+    lastElement() {
+      if (this.activeIndex === this.steps.length - 1) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
 };
 

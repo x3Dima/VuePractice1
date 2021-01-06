@@ -12,28 +12,22 @@
         <h1>План по изучению Vue.js</h1>
 
         <div class="steps">
-          <div class="steps-content">{{activeText}}</div>
+          <div class="steps-content">{{setActiveText}}</div>
           <ul class="steps-list">
             <li
-              class="steps-item"
-              v-bind:="chackPosition"
-              v-for="(step, i) in activeStep"
-              :class="{
-              'active': step.isActive,
-              'done': step.isDone
-            }"
+              @click="setActive(i)"
+              :class="['steps-item', {'active': activeIndex === i, 'done': activeIndex > i } ]"
+              v-for="(step, i) in steps"
             >
-              <span @click="setActive(i)">{{i+1}}</span>
+              <span>{{i+1}}</span>
               {{step.title}}
             </li>
           </ul>
-          <div v-if="!isFinish">
-            <button @click="prev" v-if="turn" class="btn" v-bind:="turn">
+          <div v-if="!callReset">
+            <button v-if="activeIndex !== 0" @click="prev" class="btn">
               Назад
             </button>
-            <button @click="prev" v-else class="btn" disabled v-bind:="turn">
-              Назад
-            </button>
+            <button v-else disabled @click="prev" class="btn">Назад</button>
             <button
               @click="nextOfFinish"
               class="btn primary"
@@ -41,14 +35,12 @@
             >
               Вперед
             </button>
-            <button v-else @click="isFinish = !isFinish" class="btn primary">
-              Закончить
+            <button @click="stepFinish" class="btn primary" v-else>
+              закончить
             </button>
           </div>
           <div v-else>
-            <button @click="reset" class="btn btn-primary">
-              начать заново
-            </button>
+            <button @click="reset" class="btn primary">начать заново</button>
           </div>
         </div>
       </div>
