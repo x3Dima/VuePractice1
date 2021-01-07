@@ -6,7 +6,6 @@ const App = {
   data() {
     return {
       activeIndex: 0, // то, что позволяет определить текущий активный шаг
-      activeText: "",
       callReset: false,
       steps: [
         {
@@ -69,11 +68,10 @@ const App = {
     },
 
     lastElement() {
-      if (this.activeIndex === this.steps.length - 1) {
-        return true;
-      } else {
-        return false;
-      }
+      return this.activeIndex === this.steps.length - 1;
+    },
+    isPrevButtonDisabled() {
+      if (this.activeIndex === 0) return true;
     },
   },
 };

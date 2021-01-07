@@ -24,10 +24,9 @@
             </li>
           </ul>
           <div v-if="!callReset">
-            <button v-if="activeIndex !== 0" @click="prev" class="btn">
+            <button :disabled="isPrevButtonDisabled" @click="prev" class="btn">
               Назад
             </button>
-            <button v-else disabled @click="prev" class="btn">Назад</button>
             <button
               @click="nextOfFinish"
               class="btn primary"
